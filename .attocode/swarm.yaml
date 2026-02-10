@@ -1,0 +1,107 @@
+# Swarm config: AI Coding Agent Landscape Research
+# Run: attocode --swarm --permission auto-safe --trace "$(cat TASK.md)"
+# Research-heavy task — workers use web_search extensively.
+
+# V4: Facts system — grounds all workers and judges in temporal reality.
+# Without this, workers write "as of 2024" when it's 2026.
+facts:
+  custom:
+    - "Today is February 2026. ALL research must target 2025-2026 data."
+    - "LLM training data may be outdated. Always verify with web_search."
+    - "Report files go in report/ directory. Each file MUST have real content (not empty)."
+    - "Claude model family is now 4.x (Opus 4.6, Sonnet 4.5, Haiku 4.5). GPT is 4.5/o3/o4-mini. Gemini is 2.5."
+
+philosophy: |
+  You are a research analyst. Use web_search for every factual claim.
+  Be specific: include numbers, URLs, dates. Acknowledge uncertainty.
+  Write clear, structured markdown. Use tables for comparisons.
+  Cite your sources with URLs. Do not fabricate information.
+  The current date is February 2026 — ensure all data is current.
+  You MUST write the full report content to the target file. Empty files are failures.
+
+models:
+  orchestrator: z-ai/glm-4.7
+  paid_only: true
+  qualityGate: z-ai/glm-4.7
+
+workers:
+  - name: researcher-a
+    model: z-ai/glm-4.7
+    capabilities: [research, write]
+    persona: >
+      You are a senior technology analyst specializing in developer tools and AI.
+      Use web_search to find current (2025-2026) data. Be thorough — search multiple
+      queries per topic to cross-reference. Always include source URLs. Write structured
+      markdown with tables and citations. Write the COMPLETE section to the target file.
+  - name: researcher-b
+    model: z-ai/glm-4.7
+    capabilities: [research, write]
+    persona: >
+      You are a market research analyst covering the AI developer tools space.
+      Use web_search aggressively — at least 3-5 searches per sub-topic.
+      Verify pricing and features from official sources. Include comparison
+      matrices. Cite everything. Write the COMPLETE section to the target file.
+  - name: researcher-c
+    model: z-ai/glm-4.7
+    capabilities: [research, write]
+    persona: >
+      You are a developer experience researcher. Use web_search to find
+      surveys, benchmarks, community discussions, and adoption data.
+      Summarize quantitative findings with proper attribution.
+      Note conflicting data points rather than picking one.
+      Write the COMPLETE section to the target file.
+  - name: synthesizer
+    model: minimax/minimax-m2.1
+    capabilities: [write, refactor]
+    persona: >
+      You synthesize research from other workers into executive summaries
+      and recommendations. Read the completed report sections, identify
+      key themes, and write clear, actionable prose. No web searching
+      needed — focus on synthesis and quality writing. Write the COMPLETE
+      content to each target file.
+
+hierarchy:
+  manager:
+    model: z-ai/glm-4.7
+    persona: >
+      You coordinate research workers. Ensure each section uses web_search
+      extensively and cites sources. Flag sections that lack specificity
+      or rely on vague claims. Push workers to include actual numbers.
+      CRITICAL: Verify that target files contain real content, not empty files.
+  judge:
+    model: z-ai/glm-4.7
+    persona: >
+      You are a fact-checking editor. Verify that claims have citations,
+      tables are complete, and sections meet the 800-1500 word target.
+      Flag unsourced statistics. CRITICAL: If a target file is EMPTY (0 bytes)
+      or MISSING, the task has FAILED — score 1 regardless of worker claims.
+
+budget:
+  total_tokens: 15000000
+  max_cost: 15.00
+  max_tokens_per_worker: 300000
+  max_concurrency: 3
+  dispatchStaggerMs: 1000
+
+quality:
+  enabled: true
+
+communication:
+  blackboard: true
+  dependencyContextMaxLength: 5000
+  includeFileList: true
+
+resilience:
+  workerRetries: 3
+  rateLimitRetries: 8
+  modelFailover: true
+
+# NOTE: permissions section is NOT consumed by the config loader.
+# Permission mode is set via CLI: --permission auto-safe
+# Kept here as documentation for the run command.
+# permissions:
+#   mode: auto-safe
+#   auto_approve: [read_file, glob, grep, list_files, search, web_search]
+#   scoped_approve:
+#     write_file: { paths: ["report/"] }
+#   require_approval: [bash_dangerous]
