@@ -1,435 +1,107 @@
-# Model Providers Research Report
+# Model Providers Overview
 
-**Date:** February 2026  
-**Research Focus:** Pricing, Context Windows, and Code Benchmark Scores
+The large language model landscape in early 2026 features a diverse ecosystem of providers ranging from well-established American companies to emerging Chinese AI labs. This report examines the leading model providers, their flagship offerings, pricing structures, and distinctive capabilities to help developers and organizations make informed decisions for their AI implementations.
 
----
+## Major Model Providers
 
-## Executive Summary
+### Anthropic Claude
 
-This report provides a comprehensive comparison of major LLM providers as of February 2026, focusing on pricing (per million tokens), context window capabilities, and code benchmark performance. The landscape has evolved significantly with expanded context windows becoming standard across flagship models, and pricing showing wide variation from premium to open-source alternatives.
+Anthropic, founded by former OpenAI researchers, has established itself as a leader in safe and helpful AI development. The Claude 4 family, released in late 2025, represents their most capable models to date. Claude Opus 4.5 serves as the flagship model, achieving 80.9% on SWE-bench for coding tasks while maintaining Anthropic's signature emphasis on helpfulness and harmlessness. The model family includes three tiers optimized for different use cases and budgets.
 
----
+Claude Haiku 4.5 targets high-volume, latency-sensitive applications with pricing at $1 per million input tokens and $5 per million output tokens. This makes it one of the most cost-effective options for high-throughput workloads. Claude Sonnet 4.5 occupies the middle ground at $3/$15 per million tokens, offering a balance between capability and cost for general-purpose applications. Claude Opus 4.5, despite being the most capable, received a significant price reduction in November 2025, now priced at $5/$25 per million tokens—making frontier-level capabilities accessible to broader audiences. Legacy models like Opus 4.1 remain available at the older pricing tier of $15/$75 per million tokens.
 
-## 1. Anthropic Claude
+All Claude 4 models excel in reasoning, coding, multilingual tasks, long-context handling, and image processing. The context window supports up to 200K tokens, enabling applications that require processing of extensive documents or entire code repositories.
 
-### Models
-- **Claude Opus 4.6** (Flagship)
-- **Claude Sonnet 4.5** (Balanced)
-- **Claude Haiku 4.5** (Fast & Efficient)
+### OpenAI GPT-4.5, o3, and o4-mini
 
-### Pricing (per 1M tokens)
+OpenAI continues to dominate the commercial LLM market with a diversified model portfolio. GPT-4.5, released in February 2025, represents their most capable non-reasoning model with pricing at $75 per million input tokens and $150 per million output tokens. This positions it at the premium end of the market, targeting enterprise customers requiring the highest quality outputs for critical applications.
 
-| Model | Input | Output |
-|-------|-------|--------|
-| Opus 4.6 | $5.00 | $25.00 |
-| Sonnet 4.5 | $3.00 | $15.00 |
-| Haiku 4.5 | $1.00 | $5.00 |
+The o-series represents OpenAI's reasoning-focused models. The o3 model, priced at $1.00 per million input tokens and $0.25 per million output tokens, excels at complex logical reasoning, mathematical problem-solving, and step-by-step analysis tasks. The o4-mini models expand the catalog with compact, fast alternatives that maintain strong reasoning capabilities while optimizing for latency and cost. For high-volume production workloads, o4-mini offers pricing around $2.00/$8.00 per million tokens depending on the specific variant and data sharing configuration.
 
-**Notes:**
-- Prompt caching offers up to 90% cost savings
-- Batch processing provides 50% discount on output tokens
-- Long context (>200K tokens) has additional surcharges
+OpenAI's models benefit from extensive training data, mature tooling, and broad ecosystem support. The API includes features like function calling, structured outputs, and vision capabilities across most model variants. However, the premium pricing makes cost management a significant consideration for high-volume deployments.
 
-### Context Windows
+### Google Gemini 2.5
 
-| Model | Context Window |
-|-------|----------------|
-| Opus 4.6 | 1M tokens (76% needle-in-haystack accuracy at 1M) |
-| Sonnet 4.5 | 200K tokens (18.5% needle-in-haystack at 1M) |
-| Haiku 4.5 | 200K tokens |
+Google's Gemini 2.5 series, released throughout late 2025, delivers competitive frontier-level capabilities with aggressive pricing. Gemini 2.5 Pro serves as the most advanced reasoning model, capable of comprehending vast datasets across text, audio, images, video, and entire code repositories. The model achieves strong performance on complex analytical tasks while supporting context windows up to 2 million tokens.
 
-### Code Benchmarks
+Gemini 2.5 Pro pricing ranges from $1.25-$2.50 per million input tokens and $10-$15 per million output tokens, depending on volume and usage patterns. Gemini 2.5 Flash offers a faster, more economical alternative at $0.30 per million input tokens and $2.50 per million output tokens, making it suitable for high-throughput applications where slight capability trade-offs are acceptable. The experimental version of Gemini 2.5 Pro became free to use in early 2026, though free users face certain limitations compared to paid tiers.
 
-| Benchmark | Opus 4.6 | Sonnet 4.5 | Haiku 4.5 |
-|-----------|----------|------------|-----------|
-| SWE-Bench Verified | ~77.2% | ~72% | ~65% |
-| HumanEval | ~89% | ~85% | ~78% |
-| MBPP | ~87% | ~83% | ~76% |
-| Terminal-Bench | 59.3% | N/A | N/A |
+Google's multimodal capabilities are particularly strong, with native support for processing and generating across text, images, audio, and video. The integration with Google Cloud's Vertex AI platform provides enterprise-grade infrastructure, while the developer API through ai.google.dev offers accessible entry points for smaller deployments.
 
-**Sources:** Anthropic official pricing docs, LMCouncil benchmarks, Vellum AI analysis
+### Meta Llama 4
 
----
+Meta's Llama 4 represents a significant advancement in open-weight AI models. Released in April 2025, Llama 4 Scout and Llama 4 Maverick are the first open-weight natively multimodal models, featuring unprecedented context length support and Mixture-of-Experts architecture. The models can process large amounts of information for document summarization, analysis, and decision-making while handling images alongside text for combined visual and textual understanding.
 
-## 2. OpenAI
+As open-weight models, Llama 4 variants can be downloaded and run locally, providing flexibility for organizations with data sovereignty requirements or those seeking to avoid API costs entirely. The licensing includes an acceptable use policy that prohibits certain applications, which distinguishes it from truly open-source software but enables free commercial use for most applications.
 
-### Models
-- **GPT-4.5** (Flagship)
-- **o3** (Reasoning-focused)
-- **o3-mini** (Lightweight reasoning)
+Performance benchmarks position Llama 4 as competitive with GPT-4.5, Gemini, and other closed systems, demonstrating that open AI development can achieve frontier-level capabilities. The availability of different model sizes allows deployment across varied hardware configurations, from consumer GPUs to data center infrastructure.
 
-### Pricing (per 1M tokens)
+### DeepSeek V3 and R1
 
-| Model | Input | Output |
-|-------|-------|--------|
-| GPT-4.5 | $75.00 | $150.00 |
-| o3 | $2.00 | $8.00 |
-| o3-mini | $1.10 | $4.40 |
+DeepSeek, a Chinese AI startup, has gained significant attention for delivering frontier-level capabilities at dramatically lower costs than competitors. The DeepSeek-V3 model costs just $0.14 per million input tokens and $0.28 per million output tokens—among the lowest prices in the market for models of this capability level. The company reported training V3 for under $6 million on 2,000 NVIDIA H800 GPUs, demonstrating remarkable cost efficiency.
 
-**Notes:**
-- o3 pricing reduced by 80% in June 2025 (was $10/$40)
-- GPT-4.5 is significantly more expensive but offers broad knowledge capabilities
-- o3 optimized for advanced reasoning, math, and verified coding accuracy
+DeepSeek-R1, released in January 2025, is a specialized 70B-parameter reasoning model priced at $0.55 per million input tokens and $2.19 per million output tokens. Unlike V3, which is optimized for general tasks, R1 generates step-by-step chain-of-thought reasoning before responding, making it particularly valuable for complex mathematical problem-solving, logical analysis, and applications requiring transparent reasoning processes.
 
-### Context Windows
+The combination of V3 and R1 provides developers with flexible options: V3 for general-purpose applications where cost efficiency is paramount, and R1 for tasks requiring deep reasoning. Both models are available through the DeepSeek API and various third-party platforms including SiliconFlow.
 
-| Model | Context Window |
-|-------|----------------|
-| GPT-4.5 | 128K tokens |
-| o3 | 200K tokens |
-| o3-mini | 200K tokens |
+### Mistral Large and Codestral
 
-### Code Benchmarks
+Mistral AI, a French startup, offers a tiered model family balancing capability, speed, and cost. Mistral Large serves as their flagship model with pricing at $2.00 per million input tokens and $6.00 per million output tokens. The model delivers strong performance across reasoning, coding, and multilingual tasks with support for extended context windows.
 
-| Benchmark | GPT-4.5 | o3 | o3-mini |
-|-----------|---------|-----|---------|
-| SWE-Bench Verified | ~70% | ~75% | ~68% |
-| HumanEval | ~88% | ~92% | ~85% |
-| MBPP | ~86% | ~90% | ~82% |
-| GPQA | N/A | High | Moderate |
+Codestral focuses specifically on code generation and understanding. With 22B parameters optimized for coding tasks, Codestral excels at code completion, generation, and explanation across dozens of programming languages. The model is available under a commercial license that permits free use for research and development, with paid licensing for production deployments.
 
-**Sources:** OpenAI API pricing, Azure OpenAI docs, LLM Stats
+Mistral Medium 3 offers a mid-tier option at $0.40/$2.00 per million tokens, providing a cost-effective entry point for applications that don't require frontier-level capabilities. Pixtral Large extends multimodal capabilities for image understanding tasks. All models are available through Mistral's API, with enterprise deployments supported through Microsoft Azure.
 
----
+### Qwen 3 (Alibaba)
 
-## 3. Google Gemini
+Alibaba's Qwen team has developed one of the most comprehensive open-source model families in the market. Qwen 3, released in January 2026, includes hybrid models, thinking models (with chain-of-thought reasoning), and non-thinking variants across various sizes. The series achieves state-of-the-art performance at each scale level for both thinking and general capabilities.
 
-### Models
-- **Gemini 2.5 Pro** (Flagship)
-- **Gemini 2.5 Flash** (Fast)
+Qwen3 Max, the flagship model, supports context windows up to 262K tokens with pricing starting at $1.20 per million input tokens and $6.00 per million output tokens. Batch calls are available at half price, and context caching discounts further reduce costs for applications with repetitive context. Qwen-Plus offers a more economical option at $0.40 per million input tokens for requests up to 256K tokens.
 
-### Pricing (per 1M tokens)
+The Qwen ecosystem includes specialized variants such as Qwen3-Coder for code generation, with sizes ranging from 7B to 32B parameters for local deployment. All Qwen models are available through Alibaba Cloud's Model Studio, with API access and free tier options for developers getting started.
 
-| Model | Input (≤200K) | Input (>200K) | Output (≤200K) | Output (>200K) |
-|-------|---------------|---------------|----------------|----------------|
-| Gemini 2.5 Pro | $1.25 | $2.50 | $10.00 | $15.00 |
-| Gemini 2.5 Flash | $0.075 | $0.15 | $0.60 | $0.90 |
+### Smaller Specialists
 
-**Notes:**
-- Context caching: $0.31–$0.625/M tokens + storage ($4.50/M tokens/hr)
-- Batch mode offers ~50% discount
-- Grounding with Google Search available
+Beyond the major providers, several specialized models serve niche use cases. The open-source coding ecosystem includes StarCoder2 (15B parameters, optimized for code completion), Devstral (24B parameters, designed for software agents), and various specialized fine-tunes. These models can be run locally, offering data privacy benefits and eliminating per-token costs.
 
-### Context Windows
+For organizations requiring specific capabilities—such as legal document analysis, medical text processing, or domain-specific reasoning—fine-tuned variants of base models often provide superior performance to general-purpose alternatives. The availability of model weights through platforms like Hugging Face enables customization and deployment flexibility.
 
-| Model | Context Window |
-|-------|----------------|
-| Gemini 2.5 Pro | 1M tokens |
-| Gemini 2.5 Flash | 1M tokens |
+## Comparison Matrix
 
-### Code Benchmarks
+| Provider | Model | Input Price ($/M tokens) | Output Price ($/M tokens) | Context Window | Key Strength |
+|----------|-------|--------------------------|---------------------------|----------------|--------------|
+| Anthropic | Claude Opus 4.5 | $5.00 | $25.00 | 200K | Balanced capability and safety |
+| Anthropic | Claude Sonnet 4.5 | $3.00 | $15.00 | 200K | General-purpose balance |
+| Anthropic | Claude Haiku 4.5 | $1.00 | $5.00 | 200K | High-volume, low-latency |
+| OpenAI | GPT-4.5 | $75.00 | $150.00 | 128K+ | Premium quality, ecosystem |
+| OpenAI | o3 | $1.00 | $0.25 | 200K | Complex reasoning |
+| OpenAI | o4-mini | ~$2.00 | ~$8.00 | 200K | Fast reasoning, cost-effective |
+| Google | Gemini 2.5 Pro | $1.25-$2.50 | $10-$15 | 2M | Multimodal, long context |
+| Google | Gemini 2.5 Flash | $0.30 | $2.50 | 1M+ | Speed and efficiency |
+| Meta | Llama 4 Scout | Open-weight | Open-weight | 1M+ | Open deployment, multimodal |
+| Meta | Llama 4 Maverick | Open-weight | Open-weight | 1M+ | Open deployment, multimodal |
+| DeepSeek | V3 | $0.14 | $0.28 | 128K+ | Best cost-performance ratio |
+| DeepSeek | R1 | $0.55 | $2.19 | 128K+ | Transparent reasoning |
+| Mistral | Large | $2.00 | $6.00 | 128K+ | European AI, multilingual |
+| Mistral | Codestral | Varies | Varies | 128K+ | Code generation |
+| Alibaba | Qwen3 Max | $1.20 | $6.00 | 262K | Open-source comprehensive |
+| Alibaba | Qwen-Plus | $0.40 | Varies | 1M | Economical, scalable |
 
-| Benchmark | Gemini 2.5 Pro | Gemini 2.5 Flash |
-|-----------|----------------|-------------------|
-| SWE-Bench Verified | ~74% | ~65% |
-| HumanEval | ~91% (99% on some tests) | ~84% |
-| MBPP | ~89% | ~81% |
-| EvalPlus | High | Moderate |
+## Selection Considerations
 
-**Sources:** Google AI pricing docs, Vertex AI pricing, AugmentCode analysis
+When selecting a model provider, organizations should consider several factors beyond raw pricing. The nature of the application significantly influences the optimal choice: reasoning-heavy tasks benefit from o3 or R1, while general-purpose applications might favor Claude 4 or Gemini 2.5 Pro. Cost-sensitive, high-volume deployments find DeepSeek or Qwen variants attractive, while enterprise deployments requiring mature tooling and support often prefer Anthropic or OpenAI.
 
----
+Data residency requirements may necessitate open-weight models like Llama 4 or Qwen for local deployment. Multimodal requirements favor Gemini 2.5 or Llama 4 for native image understanding capabilities. The development ecosystem, including available SDKs, documentation quality, and integration options, varies significantly across providers and can impact development velocity.
 
-## 4. Meta Llama 4
+The rapid pace of model development means pricing and capabilities continue to evolve. Organizations should build flexibility into their architectures to enable model switching as the landscape matures. The emergence of reasoning models, aggressive pricing competition from DeepSeek and others, and continued advancement in open-source alternatives suggest the market will remain dynamic through 2026 and beyond.
 
-### Models
-- **Llama 4 Maverick** (Flagship, 17B)
-- **Llama 4 Scout** (Efficient)
+## References
 
-### Pricing (per 1M tokens)
-
-| Model | Input | Output |
-|-------|-------|--------|
-| Llama 4 Maverick | $0.15 - $0.72 | $0.60 - $0.72 |
-| Llama 4 Scout | $0.08 | $0.30 |
-
-**Notes:**
-- Pricing varies by provider (OCI, Lambda AI, Azure, etc.)
-- Free tiers available through some providers
-- Open-weight model (can be self-hosted)
-
-### Context Windows
-
-| Model | Context Window |
-|-------|----------------|
-| Llama 4 Maverick | 1M tokens |
-| Llama 4 Scout | 327.7K - 10M tokens (industry's largest) |
-
-### Code Benchmarks
-
-| Benchmark | Llama 4 Maverick | Llama 4 Scout |
-|-----------|------------------|---------------|
-| SWE-Bench Verified | ~68% | ~60% |
-| HumanEval | ~82% | ~75% |
-| MBPP | ~80% | ~72% |
-| Intelligence Index | 122 tokens/sec (fast) | N/A |
-
-**Sources:** PricePerToken, LLM Stats, Galaxy AI, AIMultiple
-
----
-
-## 5. DeepSeek
-
-### Models
-- **DeepSeek-V3** (General purpose)
-- **DeepSeek-R1** (Reasoning-focused)
-- **DeepSeek-V3.1** (Updated)
-
-### Pricing (per 1M tokens)
-
-| Model | Input | Output |
-|-------|-------|--------|
-| DeepSeek-V3 | $0.27 | $1.10 |
-| DeepSeek-R1 | $0.55 | $2.19 |
-| DeepSeek-V3.1 | $0.30 | N/A |
-
-**Notes:**
-- R1 includes 32K Chain-of-Thought tokens
-- Open-source alternative with competitive pricing
-- Some security concerns noted by NIST evaluation
-
-### Context Windows
-
-| Model | Context Window |
-|-------|----------------|
-| DeepSeek-V3 | 131K tokens |
-| DeepSeek-R1 | 131K tokens |
-| DeepSeek-V3.1 | Similar to V3 |
-
-### Code Benchmarks
-
-| Benchmark | DeepSeek-V3 | DeepSeek-R1 |
-|-----------|-------------|-------------|
-| SWE-Bench Verified | ~72% | ~76% |
-| HumanEval | ~86% | ~90% |
-| MBPP | ~84% | ~88% |
-| LeetCode | High | Very High |
-
-**Sources:** DeepSeek API docs, Otomatic.ai comparison, NIST CAISI evaluation
-
----
-
-## 6. Mistral AI
-
-### Models
-- **Mistral Medium 3** (Balanced)
-- **Mistral Medium 3.1** (Updated)
-- **Mistral Large** (Flagship)
-
-### Pricing (per 1M tokens)
-
-| Model | Input | Output |
-|-------|-------|--------|
-| Mistral Medium 3 | $0.40 | $2.00 |
-| Mistral Medium 3.1 | $0.40 | $2.00 |
-| Mistral Large | ~$0.25 | ~$1.00 |
-
-**Notes:**
-- European-based provider
-- Open-weight models available
-- Competitive pricing vs US models
-
-### Context Windows
-
-| Model | Context Window |
-|-------|----------------|
-| Mistral Medium 3 | 131K tokens |
-| Mistral Medium 3.1 | 131.1K tokens |
-| Mistral Large | N/A |
-
-### Code Benchmarks
-
-| Benchmark | Mistral Medium 3 | Mistral Large |
-|-----------|------------------|---------------|
-| SWE-Bench Verified | ~65% | ~70% |
-| HumanEval | ~80% | ~85% |
-| MBPP | ~78% | ~82% |
-| General Coding | Good | Very Good |
-
-**Sources:** Mistral AI pricing, PricePerToken, Galaxy AI
-
----
-
-## 7. Qwen 3
-
-### Models
-- **Qwen3 Max** (Flagship)
-- **Qwen3 VL** (Multimodal)
-- **Qwen3 VL 235B A22B Thinking** (Large)
-
-### Pricing (per 1M tokens)
-
-| Model | Input | Output |
-|-------|-------|--------|
-| Qwen3 Max | $0.50 - $1.20 | $5.00 - $6.00 |
-| Qwen3 VL | $0.45 | $3.50 |
-| Qwen3 VL 235B | $0.45 | $3.50 |
-
-**Notes:**
-- Pricing varies by provider
-- Free tiers available
-- Strong coding capabilities
-
-### Context Windows
-
-| Model | Context Window |
-|-------|----------------|
-| Qwen3 Max | 256K - 262K tokens |
-| Qwen3 VL | 262K tokens |
-| Qwen3 VL 235B | 262K tokens |
-
-### Code Benchmarks
-
-| Benchmark | Qwen3 Max | Notes |
-|-----------|-----------|-------|
-| SWE-Bench Verified | ~71% | Strong coding performance |
-| HumanEval | ~88% | Among top performers |
-| MBPP | ~86% | Consistent across benchmarks |
-| EvalPlus | High | Competitive with frontier models |
-
-**Sources:** Qwen API pricing guide, PricePerToken, UCStrategies
-
----
-
-## Comparative Analysis
-
-### Pricing Comparison (Lowest to Highest per 1M tokens)
-
-| Rank | Model | Input | Output |
-|------|-------|-------|--------|
-| 1 | Llama 4 Scout | $0.08 | $0.30 |
-| 2 | Gemini 2.5 Flash | $0.075 | $0.60 |
-| 3 | DeepSeek-V3 | $0.27 | $1.10 |
-| 4 | Mistral Medium 3 | $0.40 | $2.00 |
-| 5 | Qwen3 VL | $0.45 | $3.50 |
-| 6 | Claude Haiku 4.5 | $1.00 | $5.00 |
-| 7 | Llama 4 Maverick | $0.15 | $0.60 |
-| 8 | o3-mini | $1.10 | $4.40 |
-| 9 | o3 | $2.00 | $8.00 |
-| 10 | Claude Sonnet 4.5 | $3.00 | $15.00 |
-| 11 | Qwen3 Max | $0.50 | $5.00 |
-| 12 | Gemini 2.5 Pro | $1.25 | $10.00 |
-| 13 | Claude Opus 4.6 | $5.00 | $25.00 |
-| 14 | GPT-4.5 | $75.00 | $150.00 |
-
-### Context Window Comparison (Largest to Smallest)
-
-| Rank | Model | Context Window |
-|------|-------|----------------|
-| 1 | Llama 4 Scout | 10M tokens |
-| 2 | Claude Opus 4.6 | 1M tokens |
-| 3 | Gemini 2.5 Pro/Flash | 1M tokens |
-| 4 | Llama 4 Maverick | 1M tokens |
-| 5 | Qwen3 Max | 262K tokens |
-| 6 | o3/o3-mini | 200K tokens |
-| 7 | Claude Sonnet 4.5 | 200K tokens |
-| 8 | Claude Haiku 4.5 | 200K tokens |
-| 9 | Qwen3 VL | 262K tokens |
-| 10 | Mistral Medium 3/3.1 | 131K tokens |
-| 11 | DeepSeek V3/R1 | 131K tokens |
-| 12 | GPT-4.5 | 128K tokens |
-| 13 | Llama 4 Scout (standard) | 327.7K tokens |
-
-### Code Benchmark Leaders
-
-#### SWE-Bench Verified (Real-world coding tasks)
-1. **Claude Opus 4.6** - ~77.2%
-2. **GPT-4.5** - ~74.9%
-3. **Gemini 2.5 Pro** - ~74%
-4. **DeepSeek-R1** - ~76%
-5. **Claude Sonnet 4.5** - ~72%
-
-#### HumanEval (Python coding challenges)
-1. **Gemini 2.5 Pro** - ~91% (99% on some tests)
-2. **o3** - ~92%
-3. **DeepSeek-R1** - ~90%
-4. **Claude Opus 4.6** - ~89%
-5. **Qwen3 Max** - ~88%
-6. **GPT-4.5** - ~88%
-
----
-
-## Key Insights
-
-### Pricing Trends
-1. **Massive price compression** - o3 saw an 80% price cut in 2025
-2. **Open-weight models** (Llama, DeepSeek, Mistral) offer significantly lower pricing
-3. **Premium models** (GPT-4.5) command 10-100x higher prices but offer unique capabilities
-4. **Context caching discounts** are becoming standard (90% for Claude, 50% for Gemini)
-
-### Context Window Evolution
-1. **1M token context** is now the new standard for flagship models (Claude Opus 4.6, Gemini 2.5, Llama 4)
-2. **Llama 4 Scout** leads with 10M token context window
-3. **Needle-in-haystack accuracy** varies significantly (76% for Opus 4.6 vs 18.5% for Sonnet 4.5 at 1M tokens)
-
-### Code Benchmark Performance
-1. **All frontier models** now exceed 70% on SWE-Bench Verified (previously thought impossible)
-2. **Reasoning models** (o3, DeepSeek-R1) excel at code generation
-3. **Claude Opus 4.6** leads on real-world coding tasks (SWE-Bench)
-4. **Gemini 2.5 Pro** achieves exceptional HumanEval scores
-
-### Regional Considerations
-- **Mistral AI** offers European-based alternative with competitive pricing
-- **DeepSeek** provides cost-effective option but has noted security concerns
-- **Qwen** offers strong performance with flexible pricing tiers
-
----
-
-## Recommendations
-
-### For Cost-Optimized Development
-1. **Llama 4 Scout** - Best value with 10M context window
-2. **DeepSeek-V3** - Strong performance at low cost
-3. **Gemini 2.5 Flash** - Fast and affordable for most tasks
-
-### For Maximum Performance
-1. **Claude Opus 4.6** - Best overall coding performance with 1M context
-2. **GPT-4.5** - Broad knowledge, highest accuracy on general tasks
-3. **o3** - Superior for reasoning-heavy coding tasks
-
-### For Balanced Requirements
-1. **Claude Sonnet 4.5** - Good performance at moderate cost
-2. **Gemini 2.5 Pro** - Excellent HumanEval scores with 1M context
-3. **Qwen3 Max** - Strong coding with competitive pricing
-
----
-
-## Sources Consulted
-
-### Web Searches Performed
-1. Anthropic Claude 4.6/4.5 pricing and context window
-2. OpenAI GPT-4.5/o3 pricing and context window
-3. Google Gemini 2.5 pricing and context window
-4. Meta Llama 4 pricing and context window
-5. DeepSeek V3/R1 pricing and context window
-6. Mistral AI pricing and context window
-7. Qwen 3 pricing and context window
-8. LLM code benchmark scores (HumanEval, MBPP, SWE-Bench)
-
-### Key Reference Sources
-- Anthropic official pricing documentation
-- OpenAI API pricing pages
-- Google AI/Gemini developer docs
-- DeepSeek API documentation
-- Mistral AI pricing pages
-- LLM Stats (llm-stats.com)
-- PricePerToken (pricepertoken.com)
-- LMCouncil AI benchmarks
-- EvalPlus leaderboard
-- NIST CAISI evaluation reports
-
----
-
-## Gaps and Areas for Further Investigation
-
-1. **Real-world latency comparisons** - While pricing is documented, actual inference speed varies by provider
-2. **Fine-tuning costs** - Most providers offer fine-tuning but pricing wasn't comprehensively covered
-3. **Rate limits** - Token rate limits vary significantly and impact production deployments
-4. **Enterprise agreements** - Volume discounts and custom pricing not detailed
-5. **Regional availability** - Some models may not be available in all regions
-6. **Multimodal capabilities** - Image/video processing costs and performance not fully explored
-
----
-
-*Report generated February 2026. All pricing and specifications subject to change.*
+- [Anthropic Claude 4 Announcement](https://www.anthropic.com/news/claude-opus-4-5)
+- [OpenAI API Pricing](https://developers.openai.com/api/docs/pricing/)
+- [Google Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing)
+- [Meta Llama 4 Launch](https://ai.meta.com/blog/llama-4-multimodal-intelligence/)
+- [DeepSeek Pricing](https://deepseek.ai/pricing)
+- [Mistral AI Pricing](https://mistral.ai/pricing)
+- [Alibaba Cloud Model Studio](https://www.alibabacloud.com/help/en/model-studio/model-pricing)
+- [LLM Leaderboard 2025](https://www.vellum.ai/llm-leaderboard)

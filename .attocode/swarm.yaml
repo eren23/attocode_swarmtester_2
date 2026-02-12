@@ -26,7 +26,7 @@ models:
 
 workers:
   - name: researcher-a
-    model: z-ai/glm-4.7
+    model: google/gemini-3-flash-preview
     capabilities: [research, write]
     persona: >
       You are a senior technology analyst specializing in developer tools and AI.
@@ -34,7 +34,7 @@ workers:
       queries per topic to cross-reference. Always include source URLs. Write structured
       markdown with tables and citations. Write the COMPLETE section to the target file.
   - name: researcher-b
-    model: z-ai/glm-4.7
+    model: google/gemini-3-flash-preview
     capabilities: [research, write]
     persona: >
       You are a market research analyst covering the AI developer tools space.
@@ -42,7 +42,7 @@ workers:
       Verify pricing and features from official sources. Include comparison
       matrices. Cite everything. Write the COMPLETE section to the target file.
   - name: researcher-c
-    model: z-ai/glm-4.7
+    model: google/gemini-3-flash-preview
     capabilities: [research, write]
     persona: >
       You are a developer experience researcher. Use web_search to find
@@ -83,6 +83,13 @@ budget:
   max_concurrency: 3
   dispatchStaggerMs: 1000
 
+# Extend built-in policy profiles — add web_search for research & code workers
+profileExtensions:
+  research-safe:
+    addTools: [web_search]
+  code-strict-bash:
+    addTools: [web_search]
+
 quality:
   enabled: true
 
@@ -96,12 +103,13 @@ resilience:
   rateLimitRetries: 8
   modelFailover: true
 
-# NOTE: permissions section is NOT consumed by the config loader.
-# Permission mode is set via CLI: --permission auto-safe
-# Kept here as documentation for the run command.
-# permissions:
-#   mode: auto-safe
-#   auto_approve: [read_file, glob, grep, list_files, search, web_search]
-#   scoped_approve:
-#     write_file: { paths: ["report/"] }
-#   require_approval: [bash_dangerous]
+# Permissions — consumed by config loader (swarm-config-loader.ts) and
+# applied in agent.ts when spawning swarm workers. CLI --permission flag
+# sets the base mode; this section adds tool-level overrides on top.
+permissions:
+  mode: auto-safe
+  auto_approve: [read_file, glob, grep, list_files, search, web_search, task_get, task_list, task_create, task_update]
+  scoped_approve:
+    write_file: { paths: ["report/"] }
+    edit_file: { paths: ["report/"] }
+  require_approval: [bash_dangerous]
